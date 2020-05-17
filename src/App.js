@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Menus from './Menus';
+import AddMenu from './AddMenu';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = { 
+    menus: [
+      {id: 1, content: 'going to the playa'},
+      {id: 2, content: 'going to the gym'}
+    ]
+   }
+   deleteMenu = (id) => {
+    const menus =this.state.menus.filter(menu => {
+      return menu.id !== id
+    });
+    this.setState({
+      menus
+    })
+   }
+  addMenu = (menu) => {
+    menu.id = Math.random();
+    let menus = [...this.state.menus, menu];
+    this.setState({
+      menus
+    })
+   }
+  render() { 
+    return ( 
+      <div className="menu-app container">
+      <h1 className="center blue-text">Daily Activity</h1>
+      <Menus menus={this.state.menus} deleteMenu={this.deleteMenu}/>
+      <AddMenu addMenu={this.addMenu}/>
+      </div>
+     );
+  }
 }
-
+ 
 export default App;
